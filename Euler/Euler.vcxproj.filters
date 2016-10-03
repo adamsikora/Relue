@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Eluer">
+      <UniqueIdentifier>{faf755f0-af39-48d7-92ba-963c49c397ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -26,6 +29,282 @@
     </ClCompile>
     <ClCompile Include="mtrand.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="59.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="64.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="80.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="84.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="88.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="89.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="90.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="93.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="94almostequilateraltriangles.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="95.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="103.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="104fibbonaciends.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="105.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="106.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="109.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="111.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="118.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="120.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="121.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="125.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="126.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="127.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="128.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="129repunitdivisibility.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="130compositeswithprimerepunitproperty.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="131.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="132.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="132unfinished.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="134.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="139 pythagorean triples !!!.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="140.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="144.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="149.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="150.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="151.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="155.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="160.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="162.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="164.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="165unsolved.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="166.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="169.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="171.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="172.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="178.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="178unfinished.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="186.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="188.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="189.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="190.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="191.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="193unfinished.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="197.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="201.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="211.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="213.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="215.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="216.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="218.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="220.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="222.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="223unfinished.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="225.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="229.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="230.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="231.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="234.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="237.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="240.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="243.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="247.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="249.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="250.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="259.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="265.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="266.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="286.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="297.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="301.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="303.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="313.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="329.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="336.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="345.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="346.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="347.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="348.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="387.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="407.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="479.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="491.cpp">
+      <Filter>Eluer</Filter>
+    </ClCompile>
+    <ClCompile Include="partitionsunfinished.cpp">
+      <Filter>Eluer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
