@@ -36,15 +36,6 @@
 
 #include "StopWatch.h"
 
-struct pairhash {
-public:
-	template <typename T, typename U>
-	std::size_t operator()(const std::pair<T, U> &x) const
-	{
-		return std::hash<T>()(x.first) ^ std::hash<U>()(x.second);
-	}
-};
-
 const uint64_t thousand = 1000;
 const uint64_t million = thousand * thousand;
 const uint64_t billion = thousand * million;
@@ -59,60 +50,25 @@ StopWatch sw;
 
 std::vector<int64_t> primes;
 
-int64_t find(int64_t threshold)
+int64_t find(int64_t power)
 {
-	std::vector<int64_t> results(threshold + 1, 0);
+	int64_t usedPrimes = 0;
+	std::map<int64_t, int64_t> minimums;
+	minimums[2] = 0;
 
-	std::unordered_map<std::pair<int64_t, int64_t>, int64_t, pairhash> hash;
-	for (int64_t prime : primes) {
-		if (prime > threshold) {
-			break;
-		}
-		int64_t number = prime;
-		int64_t power = 1;
-		int64_t poweredPrime = prime;
-		while (poweredPrime <= threshold) {
-			hash[{prime, power}] = number;
-			number += prime;
-			++power;
-			poweredPrime *= prime;
-			int64_t interNumber = number / prime;
-			while (poweredPrime <= threshold && interNumber % prime == 0) {
-				hash[{prime, power}] = number;
-				interNumber /= prime;
-				++power;
-				poweredPrime *= prime;
-			}
-		}
-	}
+	int64_t result = 1;
+	for (int i = 0; i < power; ++i) {
+		auto min = *(minimums.begin());
+		minimums.erase(minimums.begin());
 
-	for (int64_t prime : primes) {
-		int64_t number = prime;
-		while (number <= threshold) {
-			int64_t power = 1;
-			int64_t interNumber = number / prime;
-			while (interNumber % prime == 0) {
-				interNumber /= prime;
-				++power;
-			}
-			if (hash.find({ prime, power }) == hash.end()) {
-				std::cout << "Failed\n";
-			}
-			int64_t max = hash[{prime, power}];
-			if (max >= results[number]) {
-				results[number] = max;
-			}
-			number += prime;
-		}
-	}
+		result *= min.first;
+		result %= modulo;
 
-
-	int64_t result = 0;
-	for (int64_t i = 2; i <= threshold; ++i) {
-		if (results[i] == trillion) {
-			std::cout << "Fail\n";
+		if (min.second == usedPrimes) {
+			++usedPrimes;
+			minimums[primes[usedPrimes]] = usedPrimes;
 		}
-		result += results[i];
+		minimums[min.first*min.first] = min.second;
 	}
 	return result;
 }
@@ -123,8 +79,8 @@ int main()
 
 	primes = getPrimes(100 * million);
 
-	std::vector<int64_t> calculated{ find(100) };
-	std::vector<int64_t> rightResults{ 2012 };
+	std::vector<int64_t> calculated{ find(4) };
+	std::vector<int64_t> rightResults{ 120 };
 	
 	bool right = true;
 	for (uint64_t i = 0; i < calculated.size(); ++i) {
@@ -145,7 +101,7 @@ int main()
 
 	sw.start();
 
-	finalSum = find(100 * million);
+	finalSum = find(500500);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
