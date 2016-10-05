@@ -10,7 +10,9 @@ Adam Sikora
 #include <vector>
 #include <math.h>
 
-std::vector<long long> getPrimes(int maxPrime);
-std::vector<long long> getPrimes(int maxPrime, std::vector<bool>& sieve);
+std::vector<int64_t> getPrimes(int64_t maxPrime);
+std::vector<int64_t> getPrimes(int64_t maxPrime, std::vector<bool>& sieve);
+
+std::vector<std::vector<std::pair<int64_t, int64_t>>> getFactors(int64_t max);
 
 #endif //PRIMES_H
