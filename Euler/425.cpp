@@ -59,30 +59,68 @@ const uint64_t quadrillion = million * billion;
 
 boost::multiprecision::cpp_int finalSum = 0;
 
-const uint64_t modulo = 100000007i64;
-//uint64_t threshold = 10*million;
+//const uint64_t modulo = trillion;
+uint64_t threshold = 10*million;
 
 StopWatch sw;
 
-int64_t find(int64_t end)
+typedef boost::bimap<boost::bimaps::set_of<int64_t>, boost::bimaps::multiset_of<int64_t>> biMap;
+
+int64_t find(int64_t threshold)
 {
 	int64_t result = 0;
-	for (int64_t i = 3; i <= end; ++i) {
-		std::cout << i;
-		int64_t j = i - 2;
-		for (; j > 0/*i / 2*/; --j) {
-			if ((j*j) % i == 1) {
-				result += j;
-				std::cout << " " << j;
-				//break;
+
+	std::vector<int64_t> primes = getPrimes(threshold);
+	std::unordered_map<int64_t, int64_t> primesBelong;
+	for (int64_t i : primes) {
+		if (i > threshold) {
+			break;
+		}
+		primesBelong[i] = quadrillion;
+	}
+
+	biMap toCheck;
+	toCheck.insert(biMap::value_type(2, 2));
+	primesBelong[2] = 2;
+	while (!toCheck.empty()) {
+		auto minIt = toCheck.right.begin();
+
+		const int64_t number = minIt->second;
+		const int64_t max = minIt->first;
+		toCheck.left.erase(minIt->second);
+		//change digit
+		int64_t tenPlace = 1;
+		while (tenPlace < number) {
+			int64_t nBase = (10*tenPlace)*(number / (10*tenPlace)) + number % tenPlace;
+			for (int i = 0; i <= 9; ++i) {
+				int64_t n = i*tenPlace + nBase;
+				int64_t maxN = std::max(max, n);
+				if (primesBelong.count(n) > 0 && primesBelong[n] > maxN) {
+					primesBelong[n] = maxN;
+					toCheck.left.erase(n);
+					toCheck.insert(biMap::value_type(n, maxN));
+				}
+			}
+			tenPlace *= 10;
+		}
+		//add to left
+		for (int i = 1; i <= 9; ++i) {
+			int64_t n = i*tenPlace + number;
+			int64_t maxN = std::max(max, n);
+			if (primesBelong.count(n) > 0 && primesBelong[n] > maxN) {
+				primesBelong[n] = maxN;
+				toCheck.left.erase(n);
+				toCheck.insert(biMap::value_type(n, maxN));
 			}
 		}
-		if (j == i / 2) {
-			result += 1;
-		}
-		std::cout << std::endl;
-		//std::cin.ignore();
 	}
+
+	for (auto i : primesBelong) {
+		if (i.second > i.first) {
+			result += i.first;
+		}
+	}
+
 	return result;
 }
 
@@ -90,8 +128,8 @@ int main()
 {
 	sw.start();
 
-	std::vector<int64_t> calculated{ find(100), find(100) };
-	std::vector<int64_t> rightResults{ 2044, 278340 };
+	std::vector<int64_t> calculated{ find(thousand), find(10*thousand) };
+	std::vector<int64_t> rightResults{ 431, 78728 };
 	
 	bool right = true;
 	for (uint64_t i = 0; i < calculated.size(); ++i) {
@@ -112,7 +150,7 @@ int main()
 
 	sw.start();
 
-	//finalSum = find(million/10);
+	finalSum = find(threshold);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
