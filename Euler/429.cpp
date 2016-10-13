@@ -63,64 +63,56 @@ const uint64_t quadrillion = million * billion;
 int64_t finalSum = 0;
 
 const uint64_t modulo = 1000000009ui64;
-const uint64_t threshold = 1i64 << 50i64;
+uint64_t threshold = 100*million;
 
 StopWatch sw;
 
-int64_t naiveFind()
+int64_t find(int64_t max)
 {
-	int64_t result = 0;
+	int64_t result = 1;
 
-	int64_t sqrtMax = int64_t(sqrt(threshold));
-	auto primes = getPrimes(sqrtMax);
-	for (int64_t i = 1; i <= threshold; ++i) {
-		bool squareFree = true;
-		for (auto p : primes) {
-			if (i % (p*p) == 0) {
-				squareFree = false;
-				break;
-			}
+	auto primes = getPrimes(max);
+	for (int64_t i : primes) {
+		int64_t primeExp = max / i;
+		int64_t iExp = i * i;
+		while (iExp <= max) {
+			primeExp += max / iExp;
+			iExp *= i;
 		}
-		if (squareFree) {
-			++result;
-		}
+		int64_t d = intExponent(i, 2*primeExp, modulo);
+		result += result * d;
+		result %= modulo;
 	}
 
 	return result;
-}
-
-int64_t sqrtMax = int64_t(sqrt(threshold));
-const auto primes = getPrimes(sqrtMax);
-
-void recurse(int64_t index, int64_t count, int64_t current)
-{
-	if (primes[index] * primes[index] <= threshold / current) {
-		int64_t next = current * primes[index] * primes[index];
-		if (count % 2 == 0)
-			finalSum -= threshold / next;
-		else {
-			finalSum += threshold / next;
-		}
-		if (index + 1 < primes.size()) {
-			recurse(index + 1, count, current);
-			recurse(index + 1, count + 1, next);
-		}
-	}
-}
-
-void find()
-{
-	std::cout << "primes got\n";
-	recurse(0, 0, 1);
 }
 
 int main()
 {
 	sw.start();
 
-	finalSum = threshold;
-	find();
-	//std::cout << naiveFind() << " = " << finalSum << std::endl;
+	std::vector<int64_t> calculated{ find(4) };
+	std::vector<int64_t> rightResults{ 650 };
+
+	bool right = true;
+	for (uint64_t i = 0; i < calculated.size(); ++i) {
+		std::cout << calculated[i]/* % modulo*/ << " = " << rightResults[i]/* % modulo*/ << std::endl;
+		if (calculated[i]/* % modulo*/ != rightResults[i]/* % modulo*/) {
+			right = false;
+		}
+	}
+
+	sw.stop();
+	std::cout << sw.getLastElapsed() << std::endl;
+
+	if (right) {
+		std::cout << "Tests passed successfully" << std::endl;
+	} else {
+		std::cout << "Tests failed" << std::endl;
+	}
+	sw.start();
+
+	finalSum = find(threshold);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;

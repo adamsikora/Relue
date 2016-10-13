@@ -27,6 +27,12 @@
     <ClCompile Include="mtrand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PythagoreanTriples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerExponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primes.h">
@@ -42,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StopWatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PythagoreanTriples.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerExponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

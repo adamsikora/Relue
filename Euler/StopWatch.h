@@ -13,6 +13,7 @@ public:
 
 	std::string getLastElapsed()  { return convertToTime(lastElapsed);  }
 	std::string getTotalElapsed() { return convertToTime(totalElapsed); }
+	std::string getElapsedFromStart() { return convertToTime((clock() - startClock) / static_cast<double> (CLOCKS_PER_SEC)); }
 
 private:
 	clock_t startClock, stopClock;
