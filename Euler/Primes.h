@@ -10,10 +10,14 @@ Adam Sikora
 #include <vector>
 #include <math.h>
 
+void initializePrimes(int64_t maxPrime);
+
 std::vector<int64_t> getPrimes(int64_t maxPrime);
 std::vector<int64_t> getPrimes(int64_t maxPrime, std::vector<bool>& sieve);
 
 std::vector<std::vector<std::pair<int64_t, int64_t>>> getFactors(int64_t max);
 std::vector<std::vector<int64_t>> getJustFactors(int64_t max);
+
+std::vector<std::pair<int64_t, int64_t>> factorInteger(int64_t toFactor);
 
 #endif //PRIMES_H

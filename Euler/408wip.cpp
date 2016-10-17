@@ -64,51 +64,67 @@ const uint64_t quintillion = billion * billion; // 10^18
 
 int64_t finalSum = 0;
 
-const uint64_t modulo = 100000007ui64;
-const uint64_t threshold = billion;
+const uint64_t modulo = 1000000007ui64;
+const uint64_t threshold = 10*million;
 
 StopWatch sw;
 
+void countEmUp(int64_t a, int64_t b, int64_t c, int64_t max, int64_t& result)
+{
+	if (a*a <= max && b*b <= max) {
+		int64_t aa = a;
+		int64_t bb = b;
+		int64_t aa2 = aa*aa;
+		int64_t bb2 = bb*bb;
+		while (aa2 <= max && bb2 <= max) {
+			std::cout << aa2 << " " << bb2 << std::endl;
+			int64_t base = mpc::moduloFactorial(aa2 + bb2, aa2);
+			int64_t rest = mpc::moduloFactorial(2*max - (aa2 + bb2), max - aa2);
+			//std::cout << base << " " << rest << std::endl;
+			//std::cout << 2 * max - (aa2 + bb2) << " " << max - aa2 << std::endl;
+
+			result += modulo - (2 * base*rest) % modulo;
+			result %= modulo;
+
+			aa += a;
+			bb += b;
+			aa2 = aa*aa;
+			bb2 = bb*bb;
+		}
+		for (auto &it : pythagoreanTripleGeneratingMatrices) {
+			countEmUp(
+				it[0][0] * a + it[0][1] * b + it[0][2] * c,
+				it[1][0] * a + it[1][1] * b + it[1][2] * c,
+				it[2][0] * a + it[2][1] * b + it[2][2] * c,
+				max, result
+			);
+		}
+	}
+}
+
 int64_t find(int64_t max)
 {
-	//finalSum = (max - 1) / 2; // trivial cases
-
-	std::vector<bool> is(max, false);
-
-	for (int64_t a = 2; a < max; ++a) {
-		int64_t b = a;
-		for (; b < max; ++b) {
-			int64_t curr = a*b*(a*b - 1) / (a + b);
-			if (curr >= max) {
-				break;
-			}
-			if ((a*b - 1) % (a + b) == 0) {
-			 is[curr] = true;
-			}
-		}
-		if (b == a) {
-			break;
-		}
-	}
-	int64_t count = 0;
-	for (int64_t i = 0; i < is.size(); ++i) {
-		if (is[i]) {
-			++count;
-			//std::cout << i << std::endl;
-		}
-	}
-	return count;
+	int64_t result = mpc::moduloFactorial(2*max, max);
+	countEmUp(3,4,5,max,result);
+	return result;
 }
+
+// todo solve interaction between two different nonadmissive points
 
 int main()
 {
 	sw.start();
 
-	//initializePrimes(threshold);
-	//std::cout << "primes initialized" << std::endl;
-	//std::cout << naiveFind(threshold) << std::endl;
+	mpc::initialize(2*threshold, modulo);
+	std::cout << "mpc initialized" << std::endl;
 
-	finalSum = find(threshold);
+	//std::cout << mpc::moduloFactorial(7,1) << std::endl;
+	std::cout << find(1000) << std::endl;
+	std::cout << countPrimitiveTriplesUpToC(10000) << std::endl;
+
+	//finalSum = naiveFind(1000);
+	
+	//std::cout << naiveFind() << " = " << finalSum << std::endl;
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;

@@ -65,50 +65,54 @@ const uint64_t quintillion = billion * billion; // 10^18
 int64_t finalSum = 0;
 
 const uint64_t modulo = 100000007ui64;
-const uint64_t threshold = billion;
+const uint64_t threshold = million;
 
 StopWatch sw;
 
+int64_t calc(int64_t i2, int64_t i3, int64_t borders)
+{
+	int64_t result = mpc::moduloFactorial(i2 + i3 + 1);
+	result *= mpc::moduloPermutation({ i2, i3 });
+	result %= modulo;
+	result *= (intExponent(2, i3, modulo) * mpc::moduloFactorial(i3 + borders)) % modulo;
+	result %= modulo;
+	result *= mpc::moduloFactorial(i2 + i3);
+	result %= modulo;
+	return result;
+}
+
 int64_t find(int64_t max)
 {
-	//finalSum = (max - 1) / 2; // trivial cases
+	int64_t result = 0;
 
-	std::vector<bool> is(max, false);
-
-	for (int64_t a = 2; a < max; ++a) {
-		int64_t b = a;
-		for (; b < max; ++b) {
-			int64_t curr = a*b*(a*b - 1) / (a + b);
-			if (curr >= max) {
-				break;
+	for (int64_t i1 = (max - 1) / 2, i2 = 0; i2 <= (max - 1) / 3; ++i2, i1 = (max - 1 - 3*i2) / 2) {
+		//std::cout << i1 << " " << i2 << std::endl;
+		if ((2 * i1 + 3 * i2 + 1) == max) {
+			if (i1 > 0) {
+				result += calc(i1 - 1, i2, 2);
+				result %= modulo;
+				//orezane
 			}
-			if ((a*b - 1) % (a + b) == 0) {
-			 is[curr] = true;
-			}
-		}
-		if (b == a) {
-			break;
+			result += calc(i1, i2, 0);
+			result %= modulo;
+			//full
+		} else {
+			result += 2 * calc(i1, i2, 1);
+			result %= modulo;
 		}
 	}
-	int64_t count = 0;
-	for (int64_t i = 0; i < is.size(); ++i) {
-		if (is[i]) {
-			++count;
-			//std::cout << i << std::endl;
-		}
-	}
-	return count;
+
+	return result;
 }
 
 int main()
 {
 	sw.start();
 
-	//initializePrimes(threshold);
-	//std::cout << "primes initialized" << std::endl;
-	//std::cout << naiveFind(threshold) << std::endl;
+	mpc::initialize(threshold, modulo);
+	std::cout << "mpc initialized" << std::endl;
 
-	finalSum = find(threshold);
+	finalSum = find(million);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;

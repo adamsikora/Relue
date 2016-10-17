@@ -186,6 +186,7 @@
     <ClCompile Include="Clipboard.cpp" />
     <ClCompile Include="IntegerExponent.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModuloPrimeCombinations.cpp" />
     <ClCompile Include="mtrand.cpp" />
     <ClCompile Include="Primes.cpp" />
     <ClCompile Include="PythagoreanTriples.cpp" />
@@ -193,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="Clipboard.h" />
     <ClInclude Include="IntegerExponent.h" />
+    <ClInclude Include="ModuloPrimeCombinations.h" />
     <ClInclude Include="mtrand.h" />
     <ClInclude Include="Palindrome.h" />
     <ClInclude Include="Primes.h" />
