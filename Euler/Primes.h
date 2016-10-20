@@ -20,4 +20,7 @@ std::vector<std::vector<int64_t>> getJustFactors(int64_t max);
 
 std::vector<std::pair<int64_t, int64_t>> factorInteger(int64_t toFactor);
 
+std::vector<std::pair<int64_t, int64_t>> mergeFactors(std::vector<std::pair<int64_t, int64_t>> f, std::vector<std::pair<int64_t, int64_t>> s);
+
+
 #endif //PRIMES_H
