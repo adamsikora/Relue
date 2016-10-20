@@ -71,53 +71,33 @@ StopWatch sw;
 
 int64_t find(int64_t max)
 {
-	std::vector<std::set<int64_t>> points(max, std::set<int64_t>());
-	std::map<int64_t, int64_t> paths;
+	//finalSum = (max - 1) / 2; // trivial cases
 
-	int64_t pow2 = 1 % max, pow3 = 1 % max;
-	for (int64_t i = 0; i <= 2 * max; ++i) {
-		points[pow3].insert(pow2);
-		pow2 = (2 * pow2) % max;
-		pow3 = (3 * pow3) % max;
-	}
-	//points[0] = std::set<int64_t>();
-	//for (auto set : points) {
-	//	if (set.count(0) > 0) {
-	//		set.erase(0);
-	//	}
-	//}
+	std::vector<bool> is(max, false);
 
-	for (auto set : points) {
-		for (int64_t i : set) {
-			if (paths.empty()) {
-				paths.insert({ i, 1 });
-			} else {
-				auto lb = paths.lower_bound(i);
-				if (lb == paths.end()) {
-					paths.insert(lb, { i, (--lb)->second + 1 });
-					++lb;
-				} else if (lb->first == i) {
-					++(lb->second);
-				} else if (lb == paths.begin()) {
-					paths.insert({ i, 1 });
-					lb = paths.begin();
-				} else {
-					paths.insert(lb, { i, (--lb)->second + 1 });
-					++lb;
-				}
-				auto deleter = lb;
-				while (++deleter != paths.end() && deleter->second <= lb->second) {}
-				paths.erase(++lb, deleter);
-				//for (auto it = paths.begin(), jt = ++(paths.begin()); jt != paths.end(); ++it, ++jt) {
-				//	if (it->second >= jt->second) {
-				//		std::cout << "bad\n";
-				//	}
-				//}
+	for (int64_t a = 2; a < max; ++a) {
+		int64_t b = a;
+		for (; b < max; ++b) {
+			int64_t curr = a*b*(a*b - 1) / (a + b);
+			if (curr >= max) {
+				break;
+			}
+			if ((a*b - 1) % (a + b) == 0) {
+			 is[curr] = true;
 			}
 		}
+		if (b == a) {
+			break;
+		}
 	}
-
-	return paths.rbegin() == paths.rend() ? 0 : paths.rbegin()->second;
+	int64_t count = 0;
+	for (int64_t i = 0; i < is.size(); ++i) {
+		if (is[i]) {
+			++count;
+			//std::cout << i << std::endl;
+		}
+	}
+	return count;
 }
 
 int main()
@@ -126,14 +106,9 @@ int main()
 
 	//initializePrimes(threshold);
 	//std::cout << "primes initialized" << std::endl;
-	std::cout << find(10000) << std::endl;
+	//std::cout << naiveFind(threshold) << std::endl;
 
-	for (int64_t i = 1; i <= 30; ++i) {
-		std::cout << i << " ";
-		int64_t result = find(intExponent(i, 5, quadrillion));
-		std::cout << result << std::endl;
-		finalSum += result;
-	}
+	finalSum = find(threshold);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
