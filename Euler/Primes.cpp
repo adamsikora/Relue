@@ -122,3 +122,29 @@ std::vector<std::pair<int64_t, int64_t>> factorInteger(int64_t toFactor)
 	}
 	return result;
 }
+
+std::vector<std::pair<int64_t, int64_t>> mergeFactors(std::vector<std::pair<int64_t, int64_t>> f, std::vector<std::pair<int64_t, int64_t>> s)
+{
+	std::vector<std::pair<int64_t, int64_t>> result;
+	int64_t i = 0, j = 0;
+	while (i < f.size() && j < s.size()) {
+		if (f[i].first < s[j].first) {
+			result.push_back({ f[i].first, f[i].second });
+			++i;
+		} else if (s[j].first < f[i].first) {
+			result.push_back({ s[j].first, s[j].second });
+			++j;
+		} else {
+			result.push_back({ f[i].first, f[i].second + s[j].second });
+			++i;
+			++j;
+		}
+	}
+	for (; i < f.size(); ++i) {
+		result.push_back({ f[i].first, f[i].second });
+	}
+	for (; j < s.size(); ++j) {
+		result.push_back({ s[j].first, s[j].second });
+	}
+	return result;
+}
