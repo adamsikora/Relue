@@ -63,30 +63,67 @@ const uint64_t trillion = million * million; // 10^12
 const uint64_t quadrillion = million * billion; // 10^15
 const uint64_t quintillion = billion * billion; // 10^18
 
-int64_t finalSum = 0;
+typedef ttmath::Int<256> unlimitedInt;
 
-const int64_t modulo = 982451653i64;
-const int64_t threshold = 100 * trillion;
+unlimitedInt finalSum = 0;
+
+const int64_t modulo = 100 * million;
+const int64_t threshold = trillion;
 
 StopWatch sw;
 
-int64_t find(int64_t num, int64_t mod)
-{
-	if (num < 10) {
-		num += modulo;
-	}
-	int64_t round = 8;
-	for (int64_t i = 3; i < num; ++i) {
-		round = (((((round*round) % mod)*round) % mod) * 27) % mod;
-	}
-	return round;
-}
 
 int main()
 {
 	sw.start();
 
-	finalSum = find(find(find(10000, 2 * 3 * intExponent(13, 4)), 2*3*intExponent(13, 6)), intExponent(13, 8));
+	std::vector<int64_t> dices{ 1, 4, 6, 8, 12/*, 20*/ };
+	std::vector<std::vector<unlimitedInt>> throws(dices.size(), std::vector<unlimitedInt>());
+
+	
+	throws[0] = std::vector<unlimitedInt>(1, 1);
+	for (int64_t i = 1, size = 1; i < dices.size(); ++i) {
+		size *= dices[i];
+		throws[i] = std::vector<unlimitedInt>(size, 0);
+	}
+	for (int64_t i = 0; i < dices.size() - 1; ++i) {
+		std::vector<unlimitedInt> temp(throws[i + 1].size(), 0);
+		std::vector<unlimitedInt> nextTemp(throws[i + 1].size(), 0);
+		for (int64_t l = 0; l < dices[i + 1]; ++l) {
+			temp[l] = 1;
+		}
+		for (int64_t j = 0; j < throws[i].size(); ++j) {
+			if (j % 100 == 0) {
+				std::cout << dices[i + 1] << " " << j << std::endl;
+			}
+			int64_t k = 0;
+			while (temp[k] == 0) {
+				++k;
+			}
+			for (k; k < temp.size() && temp[k] > 0; ++k) {
+				throws[i + 1][k] += temp[k] * throws[i][j];
+				if (j < throws[i].size() - 1) {
+					for (int64_t l = 0; l < dices[i + 1]; ++l) {
+						nextTemp[k + l + 1] += temp[k];
+					}
+				}
+			}
+			std::swap(nextTemp, temp);
+			nextTemp = std::vector<unlimitedInt>(throws[i + 1].size(), 0);
+		}
+	}
+	//std::cout << throws[dices.size() - 1][throws[dices.size() - 1].size() - 1] << std::endl;
+	unlimitedInt num = 0, num2 = 0, denom = 0;
+	for (int64_t i = 0; i < throws.back().size(); ++i) {
+		num += throws.back()[i] * (i + 1);
+		num2 += throws.back()[i] * (i + 1) * (i + 1);
+		denom += throws.back()[i];
+	}
+	unlimitedInt totNum = denom * num2 - num * num;
+	unlimitedInt totDenom = denom * denom;
+	totNum *= 100000;
+
+	finalSum = totNum / totDenom;
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
