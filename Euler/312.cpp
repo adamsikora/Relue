@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+#include <array>
 
 #include <math.h>
 
@@ -64,57 +65,35 @@ const uint64_t quintillion = billion * billion; // 10^18
 
 int64_t finalSum = 0;
 
-const uint64_t modulo = 100000007ui64;
-const uint64_t threshold = billion;
+const int64_t modulo = 982451653i64;
+const int64_t threshold = 100 * trillion;
 
 StopWatch sw;
 
-int64_t find(int64_t max)
+int64_t find(int64_t num, int64_t mod)
 {
-	//finalSum = (max - 1) / 2; // trivial cases
-
-	std::vector<bool> is(max, false);
-
-	for (int64_t a = 2; a < max; ++a) {
-		int64_t b = a;
-		for (; b < max; ++b) {
-			int64_t curr = a*b*(a*b - 1) / (a + b);
-			if (curr >= max) {
-				break;
-			}
-			if ((a*b - 1) % (a + b) == 0) {
-			 is[curr] = true;
-			}
-		}
-		if (b == a) {
-			break;
-		}
+	if (num < 10) {
+		num += modulo;
 	}
-	int64_t count = 0;
-	for (int64_t i = 0; i < is.size(); ++i) {
-		if (is[i]) {
-			++count;
-			//std::cout << i << std::endl;
-		}
+	int64_t round = 8;
+	for (int64_t i = 3; i < num; ++i) {
+		round = (((((round*round) % mod)*round) % mod) * 27) % mod;
 	}
-	return count;
+	return round;
 }
 
 int main()
 {
 	sw.start();
 
-	//initializePrimes(threshold);
-	//std::cout << "primes initialized" << std::endl;
-	//std::cout << naiveFind(threshold) << std::endl;
-
-	finalSum = find(threshold);
+	finalSum = find(find(find(10000, 2 * 3 * intExponent(13, 4)), 2*3*intExponent(13, 6)), intExponent(13, 8));
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
 
 	std::stringstream answer;
-	answer << finalSum;
+	answer.precision(8);
+	answer << std::fixed << finalSum;
 	std::ofstream file;
 	file.open("Euler.txt");
 	file << answer.str();

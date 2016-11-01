@@ -70,23 +70,69 @@ const int64_t threshold = 100 * trillion;
 
 StopWatch sw;
 
-int64_t find(int64_t num, int64_t mod)
+int64_t twoToNm1;
+int64_t twoTotwoNm2;
+
+int64_t recurse(int64_t x1, int64_t x2, int64_t y1, int64_t y2)
 {
-	if (num < 10) {
-		num += modulo;
+	int64_t sx1 = (x1 - twoToNm1)*(x1 - twoToNm1);
+	int64_t sx2 = (x2 - twoToNm1)*(x2 - twoToNm1);
+	int64_t sy1 = (y1 - twoToNm1)*(y1 - twoToNm1);
+	int64_t sy2 = (y2 - twoToNm1)*(y2 - twoToNm1);
+	bool b1 = sx1 + sy1 <= twoTotwoNm2;
+	bool b2 = sx1 + sy2 <= twoTotwoNm2;
+	bool b3 = sx2 + sy1 <= twoTotwoNm2;
+	bool b4 = sx2 + sy2 <= twoTotwoNm2;
+	int64_t result;
+	if (b1 == b2 && b2 == b3 && b3 == b4) {
+		result = 2;
+	} else {
+		int64_t splitX = (x1 + x2) / 2;
+		int64_t splitY = (y1 + y2) / 2;
+		result = 1
+			+ recurse(x1, splitX, y1, splitY)
+			+ recurse(x1, splitX, splitY + 1, y2)
+			+ recurse(splitX + 1, x2, y1, splitY)
+			+ recurse(splitX + 1, x2, splitY + 1, y2);
 	}
-	int64_t round = 8;
-	for (int64_t i = 3; i < num; ++i) {
-		round = (((((round*round) % mod)*round) % mod) * 27) % mod;
-	}
-	return round;
+	return result;
+}
+
+int64_t find(int64_t n)
+{
+	twoToNm1 = intExponent(2, n - 1);
+	twoTotwoNm2 = intExponent(2, 2 * n - 2);
+
+	int64_t result = 1;
+
+	result += recurse(0, twoToNm1 - 1, 0, twoToNm1 - 1);
+	result += recurse(0, twoToNm1 - 1, twoToNm1, 2*twoToNm1 - 1);
+	result += recurse(twoToNm1, 2 * twoToNm1 - 1, 0, twoToNm1 - 1);
+	result += recurse(twoToNm1, 2 * twoToNm1 - 1, twoToNm1, 2 * twoToNm1 - 1);
+
+	return result;
 }
 
 int main()
 {
 	sw.start();
+	int64_t n = 3;
+	int64_t dim = intExponent(2, n);
+	int64_t twoToNm1 = intExponent(2, n - 1);
+	int64_t twoTotwoNm2 = intExponent(2, 2*n - 2);
+	for (int64_t y = 0; y < dim; ++y) {
+		int64_t yPart = (y - twoToNm1)*(y - twoToNm1);
+		for (int64_t x = 0; x < dim; ++x) {
+			if ((x - twoToNm1)*(x - twoToNm1) + yPart <= twoTotwoNm2) {
+				std::cout << "X";
+			} else {
+				std::cout << "O";
+			}
+		}
+		std::cout << std::endl;
+	}
 
-	finalSum = find(find(find(10000, 2 * 3 * intExponent(13, 4)), 2*3*intExponent(13, 6)), intExponent(13, 8));
+	finalSum = find(24);
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;

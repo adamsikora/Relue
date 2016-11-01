@@ -70,23 +70,31 @@ const int64_t threshold = 100 * trillion;
 
 StopWatch sw;
 
-int64_t find(int64_t num, int64_t mod)
+int64_t find(int64_t c, int64_t r)
 {
-	if (num < 10) {
-		num += modulo;
+	int64_t result = 1;
+
+	for (int64_t i = 0; i < r; ++i) {
+		int64_t nextResult = 1 + std::min(result, c - 1);
+		result -= std::min(result, c - 1);
+		int64_t nBackAndForth = result / (c - 2);
+		if (result % (c - 2) > 0) {
+			++nBackAndForth;
+		}
+		nextResult += 2 * nBackAndForth + result;
+		result = nextResult;
 	}
-	int64_t round = 8;
-	for (int64_t i = 3; i < num; ++i) {
-		round = (((((round*round) % mod)*round) % mod) * 27) % mod;
-	}
-	return round;
+
+	return result;
 }
 
 int main()
 {
 	sw.start();
 
-	finalSum = find(find(find(10000, 2 * 3 * intExponent(13, 4)), 2*3*intExponent(13, 6)), intExponent(13, 8));
+	for (int64_t i = 3; i <= 40; ++i) {
+		finalSum += find(i, 30);
+	}
 
 	sw.stop();
 	std::cout << sw.getLastElapsed() << std::endl;
